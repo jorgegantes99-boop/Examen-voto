@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de Conocimiento sobre España</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:#dfe5eb;color:#172331;line-height:1.5}
+.page{width:900px;max-width:100%;margin:0 auto 40px;background:#fff;box-shadow:0 5px 35px rgba(0,0,0,.14);padding:0 58px 55px}
+.top{height:7px;background:linear-gradient(90deg,#b3122f,#f0c419,#b3122f);margin:0 -58px 34px}
+.header{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid #dce3ea;padding-bottom:20px;margin-bottom:25px}
+.brand{font-family:Montserrat;font-weight:800;letter-spacing:2px;color:#172b4d;font-size:21px}
+.sub{font-family:Montserrat;font-size:10px;letter-spacing:3px;color:#a13a48;text-transform:uppercase;margin-top:4px}
+.badge{background:#172b4d;color:white;padding:6px 11px;border-radius:3px;font:700 10px Montserrat;letter-spacing:1px;text-transform:uppercase}
+.meta{text-align:right;color:#82909d;font-size:10px;margin-top:6px}
+h1{text-align:center;font:800 28px Montserrat;color:#172b4d;text-transform:uppercase;letter-spacing:1px}
+h1 span{color:#b3122f}
+.subtitle{text-align:center;color:#72808d;font-size:13px;margin:7px 0 20px}
+.intro{background:#f6f8fa;border-left:4px solid #b3122f;padding:14px 17px;font-size:13px;color:#354555;margin-bottom:22px}
+.intro strong{color:#172b4d}
+.progress{margin-bottom:25px}
+.progress-top{display:flex;justify-content:space-between;font:600 11px Montserrat;color:#778593;margin-bottom:6px}
+.track{height:7px;background:#e8edf2;border-radius:20px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#b3122f,#e2ad16);transition:.2s}
+.section{font:700 10px Montserrat;letter-spacing:2px;color:#fff;background:#172b4d;display:inline-block;padding:5px 11px;border-radius:2px;margin:22px 0 14px}
+.q{border:1px solid #e3e8ed;border-radius:7px;padding:15px 16px;margin-bottom:12px;transition:.2s}
+.q:hover{border-color:#c7d0d9}
+.q.correct{border-color:#2c8a57;background:#f2fbf6}
+.q.wrong{border-color:#c33a42;background:#fff5f5}
+.qhead{display:flex;gap:10px;align-items:flex-start}
+.num{font:800 12px Montserrat;color:#b3122f;min-width:25px}
+.text{font-size:13px;font-weight:600;flex:1}
+.level{font:700 9px Montserrat;letter-spacing:.7px;padding:3px 6px;border-radius:3px;background:#edf1f5;color:#657585;white-space:nowrap}
+.options{margin:12px 0 0 35px;display:grid;gap:7px}
+label.opt{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:#344453;cursor:pointer}
+input[type=radio]{accent-color:#b3122f;margin-top:3px}
+.explanation{display:none;margin:11px 0 0 35px;padding:9px 11px;border-left:3px solid #c7d0d9;background:#f7f9fb;font-size:11.5px;color:#536371}
+.q.checked .explanation{display:block}
+.q.correct .explanation{border-left-color:#2c8a57}
+.q.wrong .explanation{border-left-color:#c33a42}
+.correct-label{font-weight:700;color:#2c8a57}
+.wrong-label{font-weight:700;color:#c33a42}
+.check{display:block;margin:32px auto 0;border:0;border-radius:6px;background:#b3122f;color:#fff;padding:14px 42px;font:700 13px Montserrat;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 10px rgba(179,18,47,.2)}
+.check:hover{transform:translateY(-1px);background:#941027}
+#result{display:none;margin-top:25px;padding:25px;border-radius:8px;text-align:center;border:2px solid #172b4d;background:#f7f9fb}
+.score{font:800 44px Montserrat;color:#172b4d;margin:5px}
+.verdict{font:800 19px Montserrat;text-transform:uppercase;letter-spacing:1px}
+.message{font-size:13px;color:#536371;margin:8px auto 18px;max-width:680px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0}
+.stat{background:#fff;border:1px solid #dde4ea;padding:10px;border-radius:5px}
+.stat b{display:block;font:800 17px Montserrat;color:#172b4d}
+.stat span{font-size:9px;color:#788693;text-transform:uppercase}
+.retry{border:2px solid #172b4d;background:white;color:#172b4d;padding:9px 22px;border-radius:5px;font:700 11px Montserrat;cursor:pointer}
+.sources{margin-top:35px;padding-top:17px;border-top:1px dashed #ccd5dd;font-size:10px;color:#71808d}
+.sources a{color:#a13a48}
+.footer{margin-top:22px;padding-top:14px;border-top:1px solid #e1e6eb;display:flex;justify-content:space-between;color:#9aa6b0;font-size:10px}
+.bottom{height:5px;background:linear-gradient(90deg,#b3122f,#f0c419,#b3122f);margin:25px -58px -55px}
+@media(max-width:650px){
+ .page{padding:0 20px 45px}.top,.bottom{margin-left:-20px;margin-right:-20px}
+ .header{flex-direction:column}.meta{text-align:left}.options{margin-left:0}.explanation{margin-left:0}
+ .stats{grid-template-columns:repeat(2,1fr)} h1{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="top"></div>
+<div class="header">
+  <div><div class="brand">España · Ciudadanía</div><div class="sub">Conocimientos reales</div></div>
+  <div><span class="badge">Nivel medio / alto</span><div class="meta">60 preguntas · resultado al final<br>Derecho · economía · historia · sociedad</div></div>
+</div>
+
+<h1>¿Cuánto sabes de <span>España</span>?</h1>
+<div class="subtitle">No es un test de memorizar fechas: muchas preguntas están diseñadas para detectar errores intuitivos.</div>
+<div class="intro">
+<strong>Instrucciones:</strong> responde las 60 preguntas sin mirar soluciones. Al final pulsa <strong>“Comprobar respuestas”</strong>.
+Las soluciones y explicaciones permanecerán ocultas hasta entonces. Hay preguntas de dificultad creciente y varias preguntas trampa.
+</div>
+
+<div class="progress">
+ <div class="progress-top"><span id="progressText">0 de 60 respondidas</span><span id="percent">0%</span></div>
+ <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+
+<div id="quiz">
+<div class="section">01 · Constitución e instituciones</div>
+<div class="q" id="q0">
+  <div class="qhead"><span class="num">01.</span><div class="text">¿Qué mayoría necesita el Congreso para aprobar una moción de censura al Gobierno?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q0" value="0"> <span>Mayoría simple</span></label><label class="opt"><input type="radio" name="q0" value="1"> <span>Mayoría absoluta</span></label><label class="opt"><input type="radio" name="q0" value="2"> <span>Tres quintos</span></label><label class="opt"><input type="radio" name="q0" value="3"> <span>Dos tercios</span></label></div>
+  <div class="explanation" id="e0"></div>
+</div>
+<div class="q" id="q1">
+  <div class="qhead"><span class="num">02.</span><div class="text">¿Puede el Senado, por sí solo, investir al Presidente del Gobierno?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q1" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q1" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q1" value="2"> <span>Sí, si obtiene 3/5</span></label><label class="opt"><input type="radio" name="q1" value="3"> <span>Solo en una segunda votación</span></label></div>
+  <div class="explanation" id="e1"></div>
+</div>
+<div class="q" id="q2">
+  <div class="qhead"><span class="num">03.</span><div class="text">Una cuestión de confianza planteada por el Presidente del Gobierno se entiende otorgada con…</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q2" value="0"> <span>Mayoría absoluta</span></label><label class="opt"><input type="radio" name="q2" value="1"> <span>Mayoría simple</span></label><label class="opt"><input type="radio" name="q2" value="2"> <span>3/5 del Congreso</span></label><label class="opt"><input type="radio" name="q2" value="3"> <span>2/3 del Congreso</span></label></div>
+  <div class="explanation" id="e2"></div>
+</div>
+<div class="q" id="q3">
+  <div class="qhead"><span class="num">04.</span><div class="text">¿Qué tipo de ley exige mayoría absoluta del Congreso en una votación final sobre el conjunto del proyecto?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q3" value="0"> <span>Ley ordinaria</span></label><label class="opt"><input type="radio" name="q3" value="1"> <span>Ley orgánica</span></label><label class="opt"><input type="radio" name="q3" value="2"> <span>Real Decreto-ley</span></label><label class="opt"><input type="radio" name="q3" value="3"> <span>Reglamento parlamentario</span></label></div>
+  <div class="explanation" id="e3"></div>
+</div>
+<div class="q" id="q4">
+  <div class="qhead"><span class="num">05.</span><div class="text">¿Quién tiene la función de controlar la constitucionalidad de las leyes?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q4" value="0"> <span>Tribunal Supremo</span></label><label class="opt"><input type="radio" name="q4" value="1"> <span>Tribunal Constitucional</span></label><label class="opt"><input type="radio" name="q4" value="2"> <span>Consejo de Estado</span></label><label class="opt"><input type="radio" name="q4" value="3"> <span>Congreso</span></label></div>
+  <div class="explanation" id="e4"></div>
+</div>
+<div class="q" id="q5">
+  <div class="qhead"><span class="num">06.</span><div class="text">¿Qué ocurre si el Congreso niega una cuestión de confianza al Gobierno?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q5" value="0"> <span>El Gobierno queda automáticamente disuelto</span></label><label class="opt"><input type="radio" name="q5" value="1"> <span>El Presidente presenta su dimisión y se inicia el procedimiento de designación de Presidente</span></label><label class="opt"><input type="radio" name="q5" value="2"> <span>El Senado elige al nuevo Presidente</span></label><label class="opt"><input type="radio" name="q5" value="3"> <span>Se convocan elecciones automáticamente</span></label></div>
+  <div class="explanation" id="e5"></div>
+</div>
+<div class="q" id="q6">
+  <div class="qhead"><span class="num">07.</span><div class="text">¿Puede un Real Decreto-ley regular cualquier materia sin límites?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q6" value="0"> <span>Sí, porque tiene rango de ley</span></label><label class="opt"><input type="radio" name="q6" value="1"> <span>No, la Constitución establece límites materiales</span></label><label class="opt"><input type="radio" name="q6" value="2"> <span>Sí, pero solo durante 30 días</span></label><label class="opt"><input type="radio" name="q6" value="3"> <span>Solo si lo aprueba el Senado</span></label></div>
+  <div class="explanation" id="e6"></div>
+</div>
+<div class="q" id="q7">
+  <div class="qhead"><span class="num">08.</span><div class="text">¿Quién sanciona y promulga las leyes aprobadas por las Cortes Generales?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q7" value="0"> <span>El Presidente del Gobierno</span></label><label class="opt"><input type="radio" name="q7" value="1"> <span>El Rey</span></label><label class="opt"><input type="radio" name="q7" value="2"> <span>El Presidente del Congreso</span></label><label class="opt"><input type="radio" name="q7" value="3"> <span>El Tribunal Constitucional</span></label></div>
+  <div class="explanation" id="e7"></div>
+</div>
+<div class="q" id="q8">
+  <div class="qhead"><span class="num">09.</span><div class="text">¿Qué Cámara representa especialmente la dimensión territorial según la Constitución?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q8" value="0"> <span>Congreso</span></label><label class="opt"><input type="radio" name="q8" value="1"> <span>Senado</span></label><label class="opt"><input type="radio" name="q8" value="2"> <span>Ambas exactamente del mismo modo</span></label><label class="opt"><input type="radio" name="q8" value="3"> <span>Tribunal Constitucional</span></label></div>
+  <div class="explanation" id="e8"></div>
+</div>
+<div class="q" id="q9">
+  <div class="qhead"><span class="num">10.</span><div class="text">¿Qué poder del Estado ejerce la potestad jurisdiccional?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q9" value="0"> <span>Ejecutivo</span></label><label class="opt"><input type="radio" name="q9" value="1"> <span>Legislativo</span></label><label class="opt"><input type="radio" name="q9" value="2"> <span>Judicial</span></label><label class="opt"><input type="radio" name="q9" value="3"> <span>Municipal</span></label></div>
+  <div class="explanation" id="e9"></div>
+</div>
+<div class="q" id="q10">
+  <div class="qhead"><span class="num">11.</span><div class="text">Para presentar una moción de censura en el Congreso, ¿qué requisito adicional es esencial además del apoyo mínimo de diputados?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q10" value="0"> <span>Debe incluir candidato a Presidente</span></label><label class="opt"><input type="radio" name="q10" value="1"> <span>Debe aprobarla el Senado primero</span></label><label class="opt"><input type="radio" name="q10" value="2"> <span>Debe convocarla el Rey</span></label><label class="opt"><input type="radio" name="q10" value="3"> <span>Debe contar con 3/5 de los diputados</span></label></div>
+  <div class="explanation" id="e10"></div>
+</div>
+<div class="q" id="q11">
+  <div class="qhead"><span class="num">12.</span><div class="text">¿Cuál de estas afirmaciones es correcta?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q11" value="0"> <span>El Rey gobierna y dirige la política interior</span></label><label class="opt"><input type="radio" name="q11" value="1"> <span>El Gobierno dirige la política interior y exterior</span></label><label class="opt"><input type="radio" name="q11" value="2"> <span>El Senado dirige la política exterior</span></label><label class="opt"><input type="radio" name="q11" value="3"> <span>El Tribunal Constitucional forma el Gobierno</span></label></div>
+  <div class="explanation" id="e11"></div>
+</div>
+<div class="section">02 · Economía que deberías entender</div>
+<div class="q" id="q12">
+  <div class="qhead"><span class="num">13.</span><div class="text">¿Qué mide principalmente el PIB?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q12" value="0"> <span>La riqueza neta de todos los ciudadanos</span></label><label class="opt"><input type="radio" name="q12" value="1"> <span>El valor de los bienes y servicios finales producidos en un periodo</span></label><label class="opt"><input type="radio" name="q12" value="2"> <span>Solo el gasto público</span></label><label class="opt"><input type="radio" name="q12" value="3"> <span>El dinero que tiene el Estado en el banco</span></label></div>
+  <div class="explanation" id="e12"></div>
+</div>
+<div class="q" id="q13">
+  <div class="qhead"><span class="num">14.</span><div class="text">Si la inflación baja del 6% al 3%, ¿significa que los precios están bajando?</div><span class="level">TRAMPA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q13" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q13" value="1"> <span>No, siguen aumentando pero más lentamente</span></label><label class="opt"><input type="radio" name="q13" value="2"> <span>Sí, exactamente a la mitad</span></label><label class="opt"><input type="radio" name="q13" value="3"> <span>Solo bajan los precios públicos</span></label></div>
+  <div class="explanation" id="e13"></div>
+</div>
+<div class="q" id="q14">
+  <div class="qhead"><span class="num">15.</span><div class="text">España registra déficit público del 3%. ¿Qué significa?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q14" value="0"> <span>Que la deuda pública es del 3% del PIB</span></label><label class="opt"><input type="radio" name="q14" value="1"> <span>Que el sector público gasta más de lo que ingresa en ese periodo</span></label><label class="opt"><input type="radio" name="q14" value="2"> <span>Que el PIB cae un 3%</span></label><label class="opt"><input type="radio" name="q14" value="3"> <span>Que los impuestos bajan un 3%</span></label></div>
+  <div class="explanation" id="e14"></div>
+</div>
+<div class="q" id="q15">
+  <div class="qhead"><span class="num">16.</span><div class="text">¿Qué diferencia fundamental hay entre déficit y deuda pública?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q15" value="0"> <span>Son exactamente lo mismo</span></label><label class="opt"><input type="radio" name="q15" value="1"> <span>El déficit es un flujo; la deuda es un stock acumulado</span></label><label class="opt"><input type="radio" name="q15" value="2"> <span>La deuda es un flujo y el déficit un stock</span></label><label class="opt"><input type="radio" name="q15" value="3"> <span>Solo cambia el nombre</span></label></div>
+  <div class="explanation" id="e15"></div>
+</div>
+<div class="q" id="q16">
+  <div class="qhead"><span class="num">17.</span><div class="text">Si un país tiene déficit cero, ¿significa que no tiene deuda?</div><span class="level">TRAMPA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q16" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q16" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q16" value="2"> <span>Solo si tiene inflación baja</span></label><label class="opt"><input type="radio" name="q16" value="3"> <span>Solo si pertenece al euro</span></label></div>
+  <div class="explanation" id="e16"></div>
+</div>
+<div class="q" id="q17">
+  <div class="qhead"><span class="num">18.</span><div class="text">Si tu salario sube un 5% y los precios suben un 8%, ¿qué ocurre con tu poder adquisitivo, suponiendo todo lo demás igual?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q17" value="0"> <span>Aumenta</span></label><label class="opt"><input type="radio" name="q17" value="1"> <span>Disminuye</span></label><label class="opt"><input type="radio" name="q17" value="2"> <span>No cambia</span></label><label class="opt"><input type="radio" name="q17" value="3"> <span>Se duplica</span></label></div>
+  <div class="explanation" id="e17"></div>
+</div>
+<div class="q" id="q18">
+  <div class="qhead"><span class="num">19.</span><div class="text">¿Qué suele perseguir el BCE al utilizar los tipos de interés como herramienta monetaria?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q18" value="0"> <span>Controlar directamente los salarios</span></label><label class="opt"><input type="radio" name="q18" value="1"> <span>Influir en las condiciones monetarias y la inflación</span></label><label class="opt"><input type="radio" name="q18" value="2"> <span>Fijar el precio de todas las viviendas</span></label><label class="opt"><input type="radio" name="q18" value="3"> <span>Decidir el IRPF español</span></label></div>
+  <div class="explanation" id="e18"></div>
+</div>
+<div class="q" id="q19">
+  <div class="qhead"><span class="num">20.</span><div class="text">Si el BCE sube los tipos de interés, ¿qué efecto suele tener, manteniendo lo demás constante?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q19" value="0"> <span>El crédito tiende a encarecerse</span></label><label class="opt"><input type="radio" name="q19" value="1"> <span>Todos los préstamos se vuelven gratis</span></label><label class="opt"><input type="radio" name="q19" value="2"> <span>El IVA baja automáticamente</span></label><label class="opt"><input type="radio" name="q19" value="3"> <span>La deuda pública desaparece</span></label></div>
+  <div class="explanation" id="e19"></div>
+</div>
+<div class="q" id="q20">
+  <div class="qhead"><span class="num">21.</span><div class="text">¿Qué es una recesión en sentido general?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q20" value="0"> <span>Una etapa de fuerte crecimiento</span></label><label class="opt"><input type="radio" name="q20" value="1"> <span>Una contracción significativa de la actividad económica</span></label><label class="opt"><input type="radio" name="q20" value="2"> <span>Una subida del salario mínimo</span></label><label class="opt"><input type="radio" name="q20" value="3"> <span>Una subida puntual del IVA</span></label></div>
+  <div class="explanation" id="e20"></div>
+</div>
+<div class="q" id="q21">
+  <div class="qhead"><span class="num">22.</span><div class="text">Una acción pasa de 10.000 € a 15.000 €. ¿Cuál es la ganancia nominal antes de impuestos y costes?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q21" value="0"> <span>1.500 €</span></label><label class="opt"><input type="radio" name="q21" value="1"> <span>5.000 €</span></label><label class="opt"><input type="radio" name="q21" value="2"> <span>10.000 €</span></label><label class="opt"><input type="radio" name="q21" value="3"> <span>15.000 €</span></label></div>
+  <div class="explanation" id="e21"></div>
+</div>
+<div class="q" id="q22">
+  <div class="qhead"><span class="num">23.</span><div class="text">Si el PIB nominal aumenta un 5% pero los precios aumentan aproximadamente un 5%, ¿puede el crecimiento real ser cercano a cero?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q22" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q22" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q22" value="2"> <span>Solo en países sin euro</span></label><label class="opt"><input type="radio" name="q22" value="3"> <span>Nunca</span></label></div>
+  <div class="explanation" id="e22"></div>
+</div>
+<div class="q" id="q23">
+  <div class="qhead"><span class="num">24.</span><div class="text">¿Qué describe mejor una política fiscal expansiva?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q23" value="0"> <span>Reducir demanda mediante más impuestos y menos gasto</span></label><label class="opt"><input type="radio" name="q23" value="1"> <span>Aumentar demanda mediante más gasto y/o menores impuestos, según el diseño</span></label><label class="opt"><input type="radio" name="q23" value="2"> <span>Subir los tipos del BCE</span></label><label class="opt"><input type="radio" name="q23" value="3"> <span>Fijar el tipo de cambio</span></label></div>
+  <div class="explanation" id="e23"></div>
+</div>
+<div class="q" id="q24">
+  <div class="qhead"><span class="num">25.</span><div class="text">¿Qué es productividad?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q24" value="0"> <span>Número de personas desempleadas</span></label><label class="opt"><input type="radio" name="q24" value="1"> <span>Producción obtenida por unidad de factor utilizado</span></label><label class="opt"><input type="radio" name="q24" value="2"> <span>Cantidad de impuestos pagados</span></label><label class="opt"><input type="radio" name="q24" value="3"> <span>Precio medio de una vivienda</span></label></div>
+  <div class="explanation" id="e24"></div>
+</div>
+<div class="section">03 · Impuestos y dinero público</div>
+<div class="q" id="q25">
+  <div class="qhead"><span class="num">26.</span><div class="text">¿Cuál es el tipo general del Impuesto sobre Sociedades en España?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q25" value="0"> <span>15%</span></label><label class="opt"><input type="radio" name="q25" value="1"> <span>21%</span></label><label class="opt"><input type="radio" name="q25" value="2"> <span>25%</span></label><label class="opt"><input type="radio" name="q25" value="3"> <span>30%</span></label></div>
+  <div class="explanation" id="e25"></div>
+</div>
+<div class="q" id="q26">
+  <div class="qhead"><span class="num">27.</span><div class="text">Una empresa factura 1.000.000 €. ¿Significa eso que paga el 25% de 1.000.000 € en Impuesto sobre Sociedades?</div><span class="level">TRAMPA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q26" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q26" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q26" value="2"> <span>Solo si tiene empleados</span></label><label class="opt"><input type="radio" name="q26" value="3"> <span>Solo si exporta</span></label></div>
+  <div class="explanation" id="e26"></div>
+</div>
+<div class="q" id="q27">
+  <div class="qhead"><span class="num">28.</span><div class="text">¿Quién soporta económicamente el IVA de una compra ordinaria realizada por un consumidor final?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q27" value="0"> <span>El consumidor final</span></label><label class="opt"><input type="radio" name="q27" value="1"> <span>La Agencia Tributaria</span></label><label class="opt"><input type="radio" name="q27" value="2"> <span>El proveedor extranjero siempre</span></label><label class="opt"><input type="radio" name="q27" value="3"> <span>El banco</span></label></div>
+  <div class="explanation" id="e27"></div>
+</div>
+<div class="q" id="q28">
+  <div class="qhead"><span class="num">29.</span><div class="text">¿El IRPF español es un impuesto diseñado con carácter progresivo?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q28" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q28" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q28" value="2"> <span>Solo para no residentes</span></label><label class="opt"><input type="radio" name="q28" value="3"> <span>Solo para empresas</span></label></div>
+  <div class="explanation" id="e28"></div>
+</div>
+<div class="q" id="q29">
+  <div class="qhead"><span class="num">30.</span><div class="text">Si una persona cobra 30.000 € brutos, ¿significa que todo su salario tributa necesariamente al mismo porcentaje marginal?</div><span class="level">TRAMPA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q29" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q29" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q29" value="2"> <span>Solo si es funcionario</span></label><label class="opt"><input type="radio" name="q29" value="3"> <span>Solo si tiene hipoteca</span></label></div>
+  <div class="explanation" id="e29"></div>
+</div>
+<div class="q" id="q30">
+  <div class="qhead"><span class="num">31.</span><div class="text">¿Qué es un impuesto directo?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q30" value="0"> <span>Uno que grava directamente renta o patrimonio, entre otros elementos</span></label><label class="opt"><input type="radio" name="q30" value="1"> <span>Uno que se paga siempre en efectivo</span></label><label class="opt"><input type="radio" name="q30" value="2"> <span>Uno que solo pagan empresas</span></label><label class="opt"><input type="radio" name="q30" value="3"> <span>Uno que no recauda el Estado</span></label></div>
+  <div class="explanation" id="e30"></div>
+</div>
+<div class="q" id="q31">
+  <div class="qhead"><span class="num">32.</span><div class="text">¿Cuál es la diferencia básica entre impuesto y tasa?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q31" value="0"> <span>No existe ninguna</span></label><label class="opt"><input type="radio" name="q31" value="1"> <span>La tasa se vincula a la utilización privativa o aprovechamiento especial del dominio público o a determinados servicios/actividades administrativas</span></label><label class="opt"><input type="radio" name="q31" value="2"> <span>La tasa solo la pagan empresas</span></label><label class="opt"><input type="radio" name="q31" value="3"> <span>El impuesto siempre se devuelve</span></label></div>
+  <div class="explanation" id="e31"></div>
+</div>
+<div class="q" id="q32">
+  <div class="qhead"><span class="num">33.</span><div class="text">Una persona vende una inversión con una ganancia de 20.000 €. ¿Qué concepto fiscal describe mejor esa ganancia?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q32" value="0"> <span>Rendimiento del trabajo</span></label><label class="opt"><input type="radio" name="q32" value="1"> <span>Ganancia patrimonial</span></label><label class="opt"><input type="radio" name="q32" value="2"> <span>IVA soportado</span></label><label class="opt"><input type="radio" name="q32" value="3"> <span>Cotización empresarial</span></label></div>
+  <div class="explanation" id="e32"></div>
+</div>
+<div class="q" id="q33">
+  <div class="qhead"><span class="num">34.</span><div class="text">¿Qué significa que un impuesto sea indirecto?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q33" value="0"> <span>Que grava manifestaciones indirectas de capacidad económica, como consumo</span></label><label class="opt"><input type="radio" name="q33" value="1"> <span>Que no se paga nunca</span></label><label class="opt"><input type="radio" name="q33" value="2"> <span>Que solo existe en municipios</span></label><label class="opt"><input type="radio" name="q33" value="3"> <span>Que no afecta al consumidor</span></label></div>
+  <div class="explanation" id="e33"></div>
+</div>
+<div class="q" id="q34">
+  <div class="qhead"><span class="num">35.</span><div class="text">Si una empresa tiene beneficio contable de 100.000 €, ¿es necesariamente idéntico a su base imponible del Impuesto sobre Sociedades?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q34" value="0"> <span>Sí siempre</span></label><label class="opt"><input type="radio" name="q34" value="1"> <span>No necesariamente</span></label><label class="opt"><input type="radio" name="q34" value="2"> <span>Solo si tiene menos de 10 empleados</span></label><label class="opt"><input type="radio" name="q34" value="3"> <span>Solo si cotiza en bolsa</span></label></div>
+  <div class="explanation" id="e34"></div>
+</div>
+<div class="section">04 · Historia de España — cuidado con las trampas</div>
+<div class="q" id="q35">
+  <div class="qhead"><span class="num">36.</span><div class="text">¿Qué ocurrió primero?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q35" value="0"> <span>Muerte de Franco</span></label><label class="opt"><input type="radio" name="q35" value="1"> <span>Aprobación de la Constitución de 1978</span></label><label class="opt"><input type="radio" name="q35" value="2"> <span>Entrada de España en la CEE</span></label><label class="opt"><input type="radio" name="q35" value="3"> <span>Golpe del 23-F</span></label></div>
+  <div class="explanation" id="e35"></div>
+</div>
+<div class="q" id="q36">
+  <div class="qhead"><span class="num">37.</span><div class="text">¿En qué año murió Francisco Franco?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q36" value="0"> <span>1973</span></label><label class="opt"><input type="radio" name="q36" value="1"> <span>1975</span></label><label class="opt"><input type="radio" name="q36" value="2"> <span>1977</span></label><label class="opt"><input type="radio" name="q36" value="3"> <span>1978</span></label></div>
+  <div class="explanation" id="e36"></div>
+</div>
+<div class="q" id="q37">
+  <div class="qhead"><span class="num">38.</span><div class="text">¿En qué año se aprobó mediante referéndum la Constitución española vigente?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q37" value="0"> <span>1975</span></label><label class="opt"><input type="radio" name="q37" value="1"> <span>1977</span></label><label class="opt"><input type="radio" name="q37" value="2"> <span>1978</span></label><label class="opt"><input type="radio" name="q37" value="3"> <span>1981</span></label></div>
+  <div class="explanation" id="e37"></div>
+</div>
+<div class="q" id="q38">
+  <div class="qhead"><span class="num">39.</span><div class="text">¿Quién era jefe del Estado cuando se aprobó la Constitución de 1978?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q38" value="0"> <span>Francisco Franco</span></label><label class="opt"><input type="radio" name="q38" value="1"> <span>Juan Carlos I</span></label><label class="opt"><input type="radio" name="q38" value="2"> <span>Adolfo Suárez</span></label><label class="opt"><input type="radio" name="q38" value="3"> <span>Felipe González</span></label></div>
+  <div class="explanation" id="e38"></div>
+</div>
+<div class="q" id="q39">
+  <div class="qhead"><span class="num">40.</span><div class="text">¿España entró en la Comunidad Económica Europea antes o después de la Constitución de 1978?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q39" value="0"> <span>Antes</span></label><label class="opt"><input type="radio" name="q39" value="1"> <span>Después</span></label><label class="opt"><input type="radio" name="q39" value="2"> <span>El mismo año</span></label><label class="opt"><input type="radio" name="q39" value="3"> <span>No entró en la CEE</span></label></div>
+  <div class="explanation" id="e39"></div>
+</div>
+<div class="q" id="q40">
+  <div class="qhead"><span class="num">41.</span><div class="text">¿La Segunda República española comenzó en 1931 o en 1936?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q40" value="0"> <span>1931</span></label><label class="opt"><input type="radio" name="q40" value="1"> <span>1936</span></label><label class="opt"><input type="radio" name="q40" value="2"> <span>1939</span></label><label class="opt"><input type="radio" name="q40" value="3"> <span>1923</span></label></div>
+  <div class="explanation" id="e40"></div>
+</div>
+<div class="q" id="q41">
+  <div class="qhead"><span class="num">42.</span><div class="text">¿La Guerra Civil española terminó en 1939?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q41" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q41" value="1"> <span>No, terminó en 1936</span></label><label class="opt"><input type="radio" name="q41" value="2"> <span>No, terminó en 1945</span></label><label class="opt"><input type="radio" name="q41" value="3"> <span>No, terminó en 1950</span></label></div>
+  <div class="explanation" id="e41"></div>
+</div>
+<div class="q" id="q42">
+  <div class="qhead"><span class="num">43.</span><div class="text">¿El intento de golpe de Estado del 23-F consiguió derribar al Gobierno constitucional?</div><span class="level">TRAMPA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q42" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q42" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q42" value="2"> <span>Sí, durante varias semanas</span></label><label class="opt"><input type="radio" name="q42" value="3"> <span>Sí, pero solo en Madrid</span></label></div>
+  <div class="explanation" id="e42"></div>
+</div>
+<div class="q" id="q43">
+  <div class="qhead"><span class="num">44.</span><div class="text">¿Quién era Presidente del Gobierno cuando ocurrió el 23-F?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q43" value="0"> <span>Adolfo Suárez</span></label><label class="opt"><input type="radio" name="q43" value="1"> <span>Leopoldo Calvo-Sotelo</span></label><label class="opt"><input type="radio" name="q43" value="2"> <span>Felipe González</span></label><label class="opt"><input type="radio" name="q43" value="3"> <span>José María Aznar</span></label></div>
+  <div class="explanation" id="e43"></div>
+</div>
+<div class="q" id="q44">
+  <div class="qhead"><span class="num">45.</span><div class="text">¿Qué ley de 1976 fue clave en el proceso de transición hacia las elecciones democráticas de 1977?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q44" value="0"> <span>Ley para la Reforma Política</span></label><label class="opt"><input type="radio" name="q44" value="1"> <span>Ley de Prensa de 1938</span></label><label class="opt"><input type="radio" name="q44" value="2"> <span>Ley de Amnistía de 1936</span></label><label class="opt"><input type="radio" name="q44" value="3"> <span>Ley de Bases de 1986</span></label></div>
+  <div class="explanation" id="e44"></div>
+</div>
+<div class="q" id="q45">
+  <div class="qhead"><span class="num">46.</span><div class="text">¿Qué partido ganó las elecciones generales de 1977?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q45" value="0"> <span>PSOE</span></label><label class="opt"><input type="radio" name="q45" value="1"> <span>UCD</span></label><label class="opt"><input type="radio" name="q45" value="2"> <span>AP</span></label><label class="opt"><input type="radio" name="q45" value="3"> <span>PCE</span></label></div>
+  <div class="explanation" id="e45"></div>
+</div>
+<div class="q" id="q46">
+  <div class="qhead"><span class="num">47.</span><div class="text">¿Qué Constitución española fue aprobada en Cádiz en 1812?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q46" value="0"> <span>La Pepa</span></label><label class="opt"><input type="radio" name="q46" value="1"> <span>La Constitución de 1876</span></label><label class="opt"><input type="radio" name="q46" value="2"> <span>La Constitución de 1931</span></label><label class="opt"><input type="radio" name="q46" value="3"> <span>La Constitución de 1978</span></label></div>
+  <div class="explanation" id="e46"></div>
+</div>
+<div class="q" id="q47">
+  <div class="qhead"><span class="num">48.</span><div class="text">¿Es correcto decir que Franco fue elegido democráticamente por sufragio universal como Presidente del Gobierno?</div><span class="level">TRAMPA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q47" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q47" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q47" value="2"> <span>Sí, en 1947</span></label><label class="opt"><input type="radio" name="q47" value="3"> <span>Sí, en 1975</span></label></div>
+  <div class="explanation" id="e47"></div>
+</div>
+<div class="section">05 · Sociedad, territorio y Estado</div>
+<div class="q" id="q48">
+  <div class="qhead"><span class="num">49.</span><div class="text">¿Cuántas comunidades autónomas tiene España?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q48" value="0"> <span>15</span></label><label class="opt"><input type="radio" name="q48" value="1"> <span>16</span></label><label class="opt"><input type="radio" name="q48" value="2"> <span>17</span></label><label class="opt"><input type="radio" name="q48" value="3"> <span>19</span></label></div>
+  <div class="explanation" id="e48"></div>
+</div>
+<div class="q" id="q49">
+  <div class="qhead"><span class="num">50.</span><div class="text">¿Ceuta y Melilla son comunidades autónomas?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q49" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q49" value="1"> <span>No, son ciudades autónomas</span></label><label class="opt"><input type="radio" name="q49" value="2"> <span>Son provincias</span></label><label class="opt"><input type="radio" name="q49" value="3"> <span>Son territorios de otro Estado</span></label></div>
+  <div class="explanation" id="e49"></div>
+</div>
+<div class="q" id="q50">
+  <div class="qhead"><span class="num">51.</span><div class="text">¿Qué institución representa al municipio?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q50" value="0"> <span>Ayuntamiento</span></label><label class="opt"><input type="radio" name="q50" value="1"> <span>Diputación provincial</span></label><label class="opt"><input type="radio" name="q50" value="2"> <span>Senado</span></label><label class="opt"><input type="radio" name="q50" value="3"> <span>Delegación del Gobierno</span></label></div>
+  <div class="explanation" id="e50"></div>
+</div>
+<div class="q" id="q51">
+  <div class="qhead"><span class="num">52.</span><div class="text">En las elecciones al Congreso, ¿la circunscripción electoral ordinaria es la provincia?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q51" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q51" value="1"> <span>No, siempre el municipio</span></label><label class="opt"><input type="radio" name="q51" value="2"> <span>Siempre la comunidad autónoma</span></label><label class="opt"><input type="radio" name="q51" value="3"> <span>Toda España como una única circunscripción</span></label></div>
+  <div class="explanation" id="e51"></div>
+</div>
+<div class="q" id="q52">
+  <div class="qhead"><span class="num">53.</span><div class="text">En las elecciones al Congreso, ¿qué barrera electoral mínima se aplica para participar en el reparto de escaños en una circunscripción?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q52" value="0"> <span>1% de votos válidos</span></label><label class="opt"><input type="radio" name="q52" value="1"> <span>3% de votos válidos</span></label><label class="opt"><input type="radio" name="q52" value="2"> <span>5% de votos válidos</span></label><label class="opt"><input type="radio" name="q52" value="3"> <span>10% de votos válidos</span></label></div>
+  <div class="explanation" id="e52"></div>
+</div>
+<div class="q" id="q53">
+  <div class="qhead"><span class="num">54.</span><div class="text">¿Qué sistema se utiliza para atribuir los escaños del Congreso entre las candidaturas?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q53" value="0"> <span>D'Hondt</span></label><label class="opt"><input type="radio" name="q53" value="1"> <span>Mayoría absoluta nacional</span></label><label class="opt"><input type="radio" name="q53" value="2"> <span>Sorteo</span></label><label class="opt"><input type="radio" name="q53" value="3"> <span>Sistema presidencial estadounidense</span></label></div>
+  <div class="explanation" id="e53"></div>
+</div>
+<div class="q" id="q54">
+  <div class="qhead"><span class="num">55.</span><div class="text">¿El voto en España es obligatorio por ley?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q54" value="0"> <span>Sí</span></label><label class="opt"><input type="radio" name="q54" value="1"> <span>No</span></label><label class="opt"><input type="radio" name="q54" value="2"> <span>Solo en elecciones generales</span></label><label class="opt"><input type="radio" name="q54" value="3"> <span>Solo para mayores de 30</span></label></div>
+  <div class="explanation" id="e54"></div>
+</div>
+<div class="q" id="q55">
+  <div class="qhead"><span class="num">56.</span><div class="text">¿Qué principio describe mejor la Seguridad Social contributiva?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q55" value="0"> <span>Siempre depende exclusivamente de donaciones privadas</span></label><label class="opt"><input type="radio" name="q55" value="1"> <span>Las cotizaciones financian determinadas prestaciones y forman parte de un sistema público de protección</span></label><label class="opt"><input type="radio" name="q55" value="2"> <span>Solo la financian los pensionistas</span></label><label class="opt"><input type="radio" name="q55" value="3"> <span>No tiene relación con el trabajo</span></label></div>
+  <div class="explanation" id="e55"></div>
+</div>
+<div class="q" id="q56">
+  <div class="qhead"><span class="num">57.</span><div class="text">¿Qué significa que las pensiones públicas de reparto funcionen principalmente mediante solidaridad intergeneracional?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q56" value="0"> <span>Cada trabajador guarda su dinero en una cuenta privada aislada</span></label><label class="opt"><input type="radio" name="q56" value="1"> <span>Las cotizaciones actuales contribuyen a financiar las prestaciones actuales, dentro del sistema</span></label><label class="opt"><input type="radio" name="q56" value="2"> <span>El Estado no interviene</span></label><label class="opt"><input type="radio" name="q56" value="3"> <span>Solo pagan los pensionistas</span></label></div>
+  <div class="explanation" id="e56"></div>
+</div>
+<div class="q" id="q57">
+  <div class="qhead"><span class="num">58.</span><div class="text">¿Qué afirmación sobre la Unión Europea es correcta?</div><span class="level">MEDIA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q57" value="0"> <span>España no pertenece al euro</span></label><label class="opt"><input type="radio" name="q57" value="1"> <span>España es Estado miembro de la UE y forma parte de la zona euro</span></label><label class="opt"><input type="radio" name="q57" value="2"> <span>La UE sustituyó por completo a los Estados</span></label><label class="opt"><input type="radio" name="q57" value="3"> <span>El BCE pertenece al Gobierno español</span></label></div>
+  <div class="explanation" id="e57"></div>
+</div>
+<div class="q" id="q58">
+  <div class="qhead"><span class="num">59.</span><div class="text">¿Qué institución fija la política monetaria del euro?</div><span class="level">ALTA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q58" value="0"> <span>Cada ayuntamiento</span></label><label class="opt"><input type="radio" name="q58" value="1"> <span>El Eurosistema, con el BCE y los bancos centrales nacionales del área del euro</span></label><label class="opt"><input type="radio" name="q58" value="2"> <span>El Congreso español</span></label><label class="opt"><input type="radio" name="q58" value="3"> <span>La Comisión Europea por sí sola</span></label></div>
+  <div class="explanation" id="e58"></div>
+</div>
+<div class="q" id="q59">
+  <div class="qhead"><span class="num">60.</span><div class="text">Un español vive y trabaja en otro país durante parte del año. ¿Es automáticamente residente fiscal en España por conservar la nacionalidad española?</div><span class="level">TRAMPA</span></div>
+  <div class="options"><label class="opt"><input type="radio" name="q59" value="0"> <span>Sí, siempre</span></label><label class="opt"><input type="radio" name="q59" value="1"> <span>No, la nacionalidad por sí sola no determina automáticamente la residencia fiscal</span></label><label class="opt"><input type="radio" name="q59" value="2"> <span>Solo si tiene coche español</span></label><label class="opt"><input type="radio" name="q59" value="3"> <span>Solo si habla español</span></label></div>
+  <div class="explanation" id="e59"></div>
+</div>
+</div>
+
+<button type="button" class="check" id="checkBtn">Comprobar respuestas</button>
+
+<div id="result">
+ <div class="verdict" id="verdict"></div>
+ <div class="score" id="score"></div>
+ <div class="message" id="message"></div>
+ <div class="stats">
+  <div class="stat"><b id="sDerecho">—</b><span>Derecho</span></div>
+  <div class="stat"><b id="sEconomia">—</b><span>Economía</span></div>
+  <div class="stat"><b id="sHistoria">—</b><span>Historia</span></div>
+  <div class="stat"><b id="sSociedad">—</b><span>Sociedad / fiscalidad</span></div>
+ </div>
+ <button type="button" class="retry" id="retryBtn">↺ Repetir test</button>
+</div>
+
+<div class="sources">
+<strong>Fuentes de referencia:</strong><br>
+Constitución Española y documentación del Congreso de los Diputados ·
+Agencia Estatal de Administración Tributaria · BOE · INE.
+Las preguntas fiscales que dependen de normativa vigente se han formulado de forma general; comprueba siempre la legislación actualizada antes de usar el test como asesoramiento.
+</div>
+<div class="footer"><span>Test de conocimiento sobre España · 60 preguntas</span><span>Versión 1.0 · 2026</span></div>
+<div class="bottom"></div>
+</div>
+
+<script>
+(function () {
+  var total = 60;
+
+  function updateProgress() {
+    var answered = 0;
+    for (var i = 0; i < total; i++) {
+      if (document.querySelector('input[name="q' + i + '"]:checked')) {
+        answered++;
+      }
+    }
+    document.getElementById('progressText').textContent =
+      answered + ' de ' + total + ' respondidas';
+    document.getElementById('percent').textContent =
+      Math.round(answered / total * 100) + '%';
+    document.getElementById('fill').style.width =
+      (answered / total * 100) + '%';
+  }
+
+  function checkQuiz() {
+    var answered = 0, score = 0;
+    var cats = {};
+
+    for (var i = 0; i < questions.length; i++) {
+      var x = questions[i];
+      var box = document.getElementById('q' + i);
+      var selected = document.querySelector('input[name="q' + i + '"]:checked');
+
+      box.classList.remove('correct', 'wrong');
+      box.classList.add('checked');
+
+      if (!cats[x.cat]) cats[x.cat] = {s:0, n:0};
+      cats[x.cat].n++;
+
+      if (selected) {
+        answered++;
+        var ok = Number(selected.value) === x.a;
+
+        if (ok) {
+          score++;
+          cats[x.cat].s++;
+          box.classList.add('correct');
+        } else {
+          box.classList.add('wrong');
+        }
+
+        document.getElementById('e' + i).innerHTML =
+          (ok
+            ? '<span class="correct-label">✓ Correcta.</span> '
+            : '<span class="wrong-label">✗ Incorrecta.</span> ') + x.e;
+      } else {
+        box.classList.add('wrong');
+        document.getElementById('e' + i).innerHTML =
+          '<span class="wrong-label">Sin responder.</span> ' + x.e;
+      }
+    }
+
+    var pct = Math.round(score / total * 100);
+    document.getElementById('score').textContent =
+      score + ' / ' + total + ' · ' + pct + '%';
+
+    var verdict, message;
+    if (pct >= 90) {
+      verdict = 'Nivel excelente';
+      message = 'Tienes una comprensión muy sólida de las instituciones, economía, fiscalidad e historia de España.';
+    } else if (pct >= 75) {
+      verdict = 'Nivel alto';
+      message = 'Buen nivel. Conoces bastante bien cómo funciona España, aunque hay margen para afinar los detalles más técnicos.';
+    } else if (pct >= 60) {
+      verdict = 'Nivel medio';
+      message = 'Tienes una base razonable, pero varias áreas importantes contienen lagunas o conceptos que pueden confundirse.';
+    } else if (pct >= 40) {
+      verdict = 'Nivel básico';
+      message = 'Conoces algunos conceptos, pero las preguntas de razonamiento y las trampas han hecho aparecer bastantes lagunas.';
+    } else {
+      verdict = 'Nivel insuficiente';
+      message = 'Conviene reforzar los conceptos básicos sobre instituciones, economía, fiscalidad e historia.';
+    }
+
+    document.getElementById('verdict').textContent = verdict;
+    document.getElementById('message').textContent =
+      message + ' Has respondido ' + answered + ' de ' + total +
+      '. Las explicaciones de cada pregunta están ahora visibles.';
+
+    var categoryIds = {
+      'Derecho':'sDerecho',
+      'Economía':'sEconomia',
+      'Historia':'sHistoria',
+      'Fiscalidad':'sFiscalidad',
+      'Sociedad':'sSociedad'
+    };
+
+    for (var cat in categoryIds) {
+      var el = document.getElementById(categoryIds[cat]);
+      if (el && cats[cat]) {
+        el.textContent = cats[cat].s + '/' + cats[cat].n;
+      }
+    }
+
+    document.getElementById('result').style.display = 'block';
+    setTimeout(function () {
+      document.getElementById('result').scrollIntoView({behavior:'smooth', block:'center'});
+    }, 50);
+  }
+
+  function resetQuiz() {
+    for (var i = 0; i < total; i++) {
+      var radios = document.querySelectorAll('input[name="q' + i + '"]');
+      for (var j = 0; j < radios.length; j++) radios[j].checked = false;
+
+      var q = document.getElementById('q' + i);
+      q.classList.remove('correct', 'wrong', 'checked');
+      document.getElementById('e' + i).innerHTML = '';
+    }
+
+    document.getElementById('result').style.display = 'none';
+    updateProgress();
+    window.scrollTo(0, 0);
+  }
+
+  function init() {
+    var radios = document.querySelectorAll('input[type="radio"]');
+    for (var i = 0; i < radios.length; i++) {
+      radios[i].addEventListener('change', updateProgress);
+    }
+
+    document.getElementById('checkBtn').addEventListener('click', checkQuiz);
+    document.getElementById('retryBtn').addEventListener('click', resetQuiz);
+    updateProgress();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>
